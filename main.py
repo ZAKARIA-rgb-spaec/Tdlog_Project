@@ -15,6 +15,7 @@ class Weapon:
         self.ammunitions = ammunitions
         self.range = range
 
+
     def fire_at(self, x, y, z):
         if self.ammunitions <= 0:
             raise NoAmmunitionError("Out of ammunition")
@@ -26,7 +27,8 @@ class Weapon:
         if isinstance(self, Torpedo) and z > 0:
             raise OutOfRangeError("Torpedo out of range")
         self.ammunitions -= 1
-        print("Firing the weapon")
+        return True
+
 
 class SurfaceMissile(Weapon):
     def __init__(self, ammunitions):
@@ -49,7 +51,7 @@ class Vessel:
 
     def go_to(self, x, y, z):
         distance = calculate_distance(self.coordinate, (x, y, z))
-        if distance > 1:
+        if self.weapon.range < calculate_distance(self.coordinate, (x, y, z)):
             raise OutOfRangeError("Vessel cannot move that far")
         self.coordinate = (x, y, z)
 
@@ -61,10 +63,12 @@ class Vessel:
             raise DestroyedError("Vessel is destroyed")
         self.weapon.fire_at(x, y, z)
         self.hits -= 1
-
+        return True
 class Cruiser(Vessel):
     def __init__(self, coordinate):
-        super().__init__(coordinate, 6, SurfaceMissile(50))
+            super().__init__(coordinate, 6, SurfaceMissile(50))
+
+
 
 class Submarine(Vessel):
     def __init__(self, coordinate):
@@ -93,6 +97,7 @@ class Battlefield:
         if sum(v.max_hits for v in self.vessels) + vessel.max_hits > 22:
             raise ValueError("Maximum hits exceeded")
         self.vessels.append(vessel)
+        return True
 
     def receive_hit(self, x, y, z):
         for vessel in self.vessels:

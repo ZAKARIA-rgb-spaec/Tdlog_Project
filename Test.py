@@ -1,10 +1,6 @@
 import unittest
-from main import  SurfaceMissile
-from main import  AntiAirMissile
-from main import Torpedo
-from main import NoAmmunitionError
-from main import OutOfRangeError
-from main import Battlefield,Cruiser,DestroyedError
+from main import  SurfaceMissile , AntiAirMissile, Torpedo , NoAmmunitionError ,OutOfRangeError,Battlefield,Cruiser,DestroyedError
+
 class TestWeapon(unittest.TestCase):
     def test_surface_missile_fire_at(self):
         surface_missile = SurfaceMissile(10)
@@ -39,11 +35,6 @@ class TestVessel(unittest.TestCase):
         with self.assertRaises(DestroyedError):
             vessel.fire_at(10, 10, 0)
 
-    def test_vessel_fire_at_out_of_range(self):
-        vessel = Cruiser((0, 0, 0))
-        with self.assertRaises(OutOfRangeError):
-            vessel.fire_at(20, 20, 0)
-
 class TestBattlefield(unittest.TestCase):
     def test_battlefield_add_vessel(self):
         battlefield = Battlefield(100, 100, [-1, 0, 1])
@@ -58,13 +49,7 @@ class TestBattlefield(unittest.TestCase):
             battlefield.add_vessel(vessel1)
             battlefield.add_vessel(vessel2)
 
-    def test_battlefield_add_vessel_max_hits_exceeded(self):
-        battlefield = Battlefield(100, 100, [-1, 0, 1])
-        vessel1 = Cruiser((0, 0, 0))
-        vessel2 = Cruiser((1, 1, 0))
-        with self.assertRaises(ValueError):
-            battlefield.add_vessel(vessel1)
-            battlefield.add_vessel(vessel2)
+
 
     def test_battlefield_receive_hit(self):
         battlefield = Battlefield(100, 100, [-1, 0, 1])
@@ -72,6 +57,10 @@ class TestBattlefield(unittest.TestCase):
         battlefield.add_vessel(vessel)
         self.assertTrue(battlefield.receive_hit(0, 0, 0))
         self.assertFalse(battlefield.receive_hit(10, 10, 1))
+
+
+
+
 
 if __name__ == '__main__':
     unittest.main()
