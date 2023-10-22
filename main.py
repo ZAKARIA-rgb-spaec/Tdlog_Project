@@ -15,7 +15,6 @@ class Weapon:
         self.ammunitions = ammunitions
         self.range = range
 
-
     def fire_at(self, x, y, z):
         if self.ammunitions <= 0:
             raise NoAmmunitionError("Out of ammunition")
@@ -104,5 +103,12 @@ class Battlefield:
             if vessel.get_coordinate() == (x, y, z):
                 return True
         return False
-
+a= SurfaceMissile(50)
+c=a.ammunitions
+v=a.range
+k=Weapon(0,100)
+t=k.fire_at(1,1,1)
+print(t)
+print(v)
+print(c)
 
