@@ -106,7 +106,7 @@ class Battlefield:
 a= SurfaceMissile(50)
 c=a.ammunitions
 v=a.range
-k=Weapon(0,100)
+k=Weapon(-56,100)
 t=k.fire_at(1,1,1)
 print(t)
 print(v)
